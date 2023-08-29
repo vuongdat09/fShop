@@ -1,16 +1,17 @@
-import Table from "./Table";
+import Table from "./TableProduct";
 import { useGetProductsQuery } from "../../../api/product";
+import { Link } from "react-router-dom";
 
 const List = () => {
   const { data } = useGetProductsQuery();
   return (
     <div>
       <div>
-        <a href="/admin/add">
+        <Link to="/admin/add">
           <button className="px-6 py-2 uppercase transition duration-200 ease-in border-2 border-gray-900 rounded-full hover:bg-gray-800 hover:text-white focus:outline-none">
             Add to cart
           </button>
-        </a>
+        </Link>
       </div>
       <div className="overflow-x-auto">
         <div className="flex items-center justify-center min-h-screen overflow-hidden font-sans bg-gray-100 min-w-screen">

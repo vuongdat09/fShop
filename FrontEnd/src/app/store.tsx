@@ -17,6 +17,7 @@ export const store = configureStore({
       .concat(CategoryApi.middleware)
       .concat(userApi.middleware),
 });
+
 export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;
 export type AppThunk<ReturnType = void> = ThunkAction<

@@ -64,7 +64,7 @@ export const signin = async (req, res) => {
         }
 
         const isMatch = await bcryptjs.compare(password, user.password)
-        console.log(password);
+        
         if (!isMatch) {
             return res.status(404).json({
                 message :"mật khẩu không đúng"

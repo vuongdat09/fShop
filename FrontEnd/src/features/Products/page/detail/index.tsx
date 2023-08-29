@@ -1,8 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useGetProductByIdQuery } from "../../../../api/product";
-import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { addItems } from "../../../Cart/cartSlice";
+import { addToCart } from "../../../Cart/cartSlice";
 
 const Detail = () => {
   const { id } = useParams();
@@ -179,7 +178,7 @@ const Detail = () => {
                 $ {data?.data?.price}
               </span>
             
-                <button onClick={()=>{dispatch(addItems(data.data))}} className="flex px-6 py-2 ml-auto text-white bg-red-500 border-0 rounded focus:outline-none hover:bg-red-600">
+                <button onClick={()=>{dispatch(addToCart(data?.data))}} className="flex px-6 py-2 ml-auto text-white bg-red-500 border-0 rounded focus:outline-none hover:bg-red-600">
                   Button
                 </button>
         

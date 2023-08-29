@@ -8,6 +8,8 @@ const Item = () => {
   const quantity = totalQT;
   const sumPrice = totalPrice
   console.log(quantity);
+  console.log(sumPrice)
+  
 
   console.log(cartLocal);
   const cart = cartLocal.map((item: any) => {
@@ -22,7 +24,7 @@ const Item = () => {
           <div className="flex justify-between mt-4 sm:space-y-6 sm:mt-0 sm:block sm:space-x-6">
             <div className="flex items-center border-gray-100">
               <span className="cursor-pointer rounded-l bg-gray-100 py-1 px-3.5 duration-100 hover:bg-blue-500 hover:text-blue-50"> - </span>
-              <input placeholder="/" className="w-8 h-8 text-xs text-center bg-white border outline-none" type="number" value="2" min="1" />
+              <input placeholder="/" className="w-8 h-8 text-xs text-center bg-white border outline-none" type="number" value={item.totalQuantity} min="1" />
               <span className="px-3 py-1 duration-100 bg-gray-100 rounded-r cursor-pointer hover:bg-blue-500 hover:text-blue-50"> + </span>
             </div>
             <div className="flex items-center space-x-4">

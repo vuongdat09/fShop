@@ -1,27 +1,20 @@
-import { Button, Form, Input,InputNumber,Select, message } from "antd";
-import { ICategory, IProduct } from "../../../../interface/product";
-import { useGetCategoryQuery } from "../../../../api/category";
-import { useGetProductByIdQuery, useUpdateProductMutation } from "../../../../api/product";
-import { useNavigate, useParams } from "react-router-dom";
-import {useEffect} from 'react'
-const EditProduct = () => {
-  const {id} = useParams()
+import { Button, Form, Input, InputNumber, Select, message } from "antd";
+import { IProduct } from "../../../interface/product";
+import { useGetCategoryQuery } from "../../../api/category";
+import { useAddProductMutation } from "../../../api/product";
+import { ICategory } from "../../../interface/product";
+import { useNavigate } from "react-router-dom";
+
+
+const AddProduct = () => {
   const { TextArea } = Input;
   const [form] = Form.useForm();
   const [messageApi, contextHolder] = message.useMessage();
   const navigate = useNavigate();
   const { data: category } = useGetCategoryQuery();
-  const {data:productData} = useGetProductByIdQuery(id||"")
-
- 
-
-  useEffect(()=>{
-    form.setFieldsValue(productData?.data)
-  },[productData?.data])
- 
-  const [updateProduct] = useUpdateProductMutation();
+  const [addProduct] = useAddProductMutation();
   const onFinish = (values: IProduct) => {
-    updateProduct({data:values , _id:id })
+    addProduct(values)
       .unwrap()
       .then(() => {
         messageApi.open({
@@ -34,14 +27,7 @@ const EditProduct = () => {
         }, 3000);
       });
   };
-  const selecteOption = category?.category?.map((categories:ICategory) => (
-    <Select.Option key={categories._id} value={categories._id} >
-      {categories.name}
-    </Select.Option>
-  ))
 
-  
-  
   const onFinishFailed = (errorInfo: unknown) => {
     console.log("Failed:", errorInfo);
   };
@@ -88,7 +74,7 @@ const EditProduct = () => {
             },
           ]}
         >
-          <Input />
+          <InputNumber />
         </Form.Item>
         <Form.Item<FieldType>
           label="Description"
@@ -98,11 +84,23 @@ const EditProduct = () => {
           <TextArea rows={5} />
         </Form.Item>
 
-        <Form.Item label="Category" name="categoryId" rules={[{ required: true }]}>
-        <Select>
-          {selecteOption}
-        </Select>
-      </Form.Item>
+        <Form.Item
+          label="Category"
+          name="categoryId"
+          rules={[{ required: true, message: "Please input category!" }]}
+        >
+          <Select style={{ width: 200 }}>
+            {category?.category?.map((categories: ICategory) => (
+              <Select.Option
+                key={categories._id}
+                defaultValue={categories.name[0]}
+                value={categories._id}
+              >
+                {categories.name}
+              </Select.Option>
+            ))}
+          </Select>
+        </Form.Item>
         <Form.Item<FieldType>
           label="Image"
           name="image"
@@ -111,7 +109,7 @@ const EditProduct = () => {
           <Input />
         </Form.Item>
         <Form.Item<FieldType>
-          label="Quantity"
+          label="quantity"
           name="quantity"
           rules={[{ required: true, message: "Please input quantity!" }]}
         >
@@ -128,4 +126,4 @@ const EditProduct = () => {
   );
 };
 
-export default EditProduct;
+export default AddProduct;

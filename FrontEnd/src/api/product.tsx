@@ -6,6 +6,13 @@ const productApi = createApi({
     tagTypes: ['Products'],
     baseQuery: fetchBaseQuery({
         baseUrl: "http://localhost:8080/api",
+        prepareHeaders: (headers) => {
+            const token = localStorage.getItem('token');
+            if (token) {
+                headers.set('Authorization', 'Bearer '  + JSON.parse(localStorage.getItem("token")||"{}").accessToken)
+            }
+            return headers;
+        }
     }),
     endpoints: (builder) => ({
         //actions
@@ -20,7 +27,8 @@ const productApi = createApi({
         removeProduct: builder.mutation<void, number | string>({
             query: (id) => ({
                 url: `/products/${id}`,
-                method: "DELETE"
+                method: "DELETE",
+                // headers:{Authorization: 'Bearer ' + JSON.parse(localStorage.getItem("token")||"{}").accessToken}
             }),
             invalidatesTags: ['Products']
         }),
@@ -28,7 +36,8 @@ const productApi = createApi({
             query: (product) => ({
                 url: `/products`,
                 method: "POST",
-                body: product
+                body: product,
+                // headers:{Authorization: 'Bearer ' + JSON.parse(localStorage.getItem("token")||"{}").accessToken}
             }),
             invalidatesTags: ['Products']
         }),
@@ -36,7 +45,8 @@ const productApi = createApi({
             query: (product) => ({
                 url: `/products/${product._id}`,
                 method: "PUT",
-                body: product?.data
+                body: product?.data,
+                // headers:{Authorization: 'Bearer ' + JSON.parse(localStorage.getItem("token")||"{}").accessToken}
             }),
             invalidatesTags: ['Products']
         })

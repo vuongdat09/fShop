@@ -13,7 +13,7 @@ const userApi = createApi({
             query: (userData) => ({
                 url: `/signin`,
                 method: "POST",
-                body: userData
+                body: userData,
             }),
             invalidatesTags: ['Users']
         }),
